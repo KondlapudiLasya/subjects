@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Voting Results</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>📊 Subject Voting Results</h1>
+    <ul id="results"></ul>
+    <a href="index.html">
+      <button>🔙 Back to Vote</button>
+    </a>
+  </div>
+
+  <script>
+    fetch('/results')
+      .then(response => response.json())
+      .then(data => {
+        const list = document.getElementById('results');
+        for (const [subject, count] of Object.entries(data)) {
+          const item = document.createElement('li');
+          item.textContent = `${subject}: ${count} vote(s)`;
+          list.appendChild(item);
+        }
+      });
+  </script>
+</body>
+</html>
