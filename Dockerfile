@@ -1,17 +1,18 @@
-# Use Node.js LTS base image
-FROM node:18
+# Use a Red Hat UBI-based Node.js 18 image
+FROM registry.access.redhat.com/ubi8/nodejs-18
 
 # Set working directory
-WORKDIR /app
+WORKDIR /opt/app-root/src
 
-# Copy files
+# Copy package files and install dependencies
 COPY package*.json ./
 RUN npm install
 
+# Copy app source
 COPY . .
 
-# Expose the port
+# Expose the port expected by OpenShift
 EXPOSE 8080
 
-# Start the app
+# Command to run the app
 CMD ["npm", "start"]
